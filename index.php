@@ -1,4 +1,16 @@
 <?php
+function timeAgo($tm,$rcs = 0) {
+   $cur_tm = time(); $dif = $cur_tm-$tm;
+   $pds = array('second','minute','hour','day','week','month','year','decade');
+   $lngh = array(1,60,3600,86400,604800,2630880,31570560,315705600);
+   for($v = sizeof($lngh)-1; ($v >= 0)&&(($no = $dif/$lngh[$v])<=1); $v--); if($v < 0) $v = 0; $_tm = $cur_tm-($dif%$lngh[$v]);
+
+   $no = floor($no); if($no <> 1) $pds[$v] .='s'; $x=sprintf("%d %s ",$no,$pds[$v]);
+   if(($rcs == 1)&&($v >= 1)&&(($cur_tm-$_tm) > 0)) $x .= time_ago($_tm);
+   return $x;
+}
+
+
 define('DS', DIRECTORY_SEPARATOR);
 $url = "http://{$_SERVER['HTTP_HOST']}/";
 $path = realpath('');
@@ -32,7 +44,9 @@ foreach ($dirs as $dir) {
         'mime' => $finfo->file($path.DS.$dir),
         'size' => filesize($path.DS.$dir),
         'created' => strftime($dateFormat, filectime($path.DS.$dir)),
+        'created_ago' => timeAgo(filectime($path.DS.$dir)),
         'modified' => strftime($dateFormat, filemtime($path.DS.$dir)),
+        'modified_ago' => timeAgo(filemtime($path.DS.$dir)),
         'mime' => $finfo->file($path.DS.$dir),
     );
 
@@ -107,8 +121,8 @@ $dirs = array_merge($directories, $files);
                 <td><?php echo $dir['ext'] ?></td>
                 <td><?php echo $dir['mime'] ?></td>
                 <td class="align-right"><?php echo $dir['size'] ?></td>
-                <td><?php echo $dir['modified'] ?></td>
-                <td><?php echo $dir['created'] ?></td>
+                <td><?php echo $dir['modified'] ?> / <?php echo $dir['modified_ago'] ?> ago</td>
+                <td><?php echo $dir['created'] ?> / <?php echo $dir['created_ago'] ?> ago</td>
             </tr>
             <?php endforeach ?>
         </tbody>
