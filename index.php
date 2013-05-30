@@ -10,6 +10,23 @@ function timeAgo($tm,$rcs = 0) {
    return $x;
 }
 
+function formatSizeUnits($bytes) {
+    if ($bytes >= 1073741824) {
+        $bytes = number_format($bytes / 1073741824, 2) . ' GiB';
+    } elseif ($bytes >= 1048576) {
+        $bytes = number_format($bytes / 1048576, 2) . ' MiB';
+    } elseif ($bytes >= 1024) {
+        $bytes = number_format($bytes / 1024, 2) . ' KiB';
+    } elseif ($bytes > 1) {
+        $bytes = $bytes . ' bytes';
+    } elseif ($bytes == 1) {
+        $bytes = $bytes . ' byte';
+    } else {
+        $bytes = '0 bytes';
+    }
+    return $bytes;
+}
+
 
 define('DS', DIRECTORY_SEPARATOR);
 $url = "http://{$_SERVER['HTTP_HOST']}/";
@@ -42,7 +59,7 @@ foreach ($dirs as $dir) {
         'name' => $dir,
         'ext' => pathinfo($dir, PATHINFO_EXTENSION),
         'mime' => $finfo->file($path.DS.$dir),
-        'size' => filesize($path.DS.$dir),
+        'size' => formatSizeUnits(filesize($path.DS.$dir)),
         'created' => strftime($dateFormat, filectime($path.DS.$dir)),
         'created_ago' => timeAgo(filectime($path.DS.$dir)),
         'modified' => strftime($dateFormat, filemtime($path.DS.$dir)),
