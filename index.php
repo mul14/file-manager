@@ -118,6 +118,7 @@ $dirs = array_merge($directories, $files);
     </style>
 </head>
 <body>
+    <h1><?php echo $path ?></h1>
     <table>
         <thead id="thead">
             <tr>
