@@ -74,10 +74,14 @@ $dirs = array_merge($directories, $files);
         table th {
             border: 1px solid #cecece;
             padding: 4px 8px;
+            text-align: left;
         }
         table td {
             border-bottom: 1px solid #cecece;
             padding: 4px 8px;
+        }
+        .align-right {
+            text-align: right
         }
     </style>
 </head>
@@ -99,7 +103,7 @@ $dirs = array_merge($directories, $files);
                     <a href="<?php echo $url.$dir['name'] ?>"><?php echo $dir['name'] ?></a>
                 </td>
                 <td><?php echo $dir['ext'] ?></td>
-                <td><?php echo $dir['size'] ?></td>
+                <td class="align-right"><?php echo $dir['size'] ?></td>
                 <td><?php echo $dir['modified'] ?></td>
                 <td><?php echo $dir['created'] ?></td>
             </tr>
