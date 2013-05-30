@@ -27,9 +27,21 @@ function formatSizeUnits($bytes) {
     return $bytes;
 }
 
+function curPageURL() {
+    $pageURL = 'http';
+    if (!empty($_SERVER["HTTPS"])) {$pageURL .= "s";}
+    $pageURL .= "://";
+    if ($_SERVER["SERVER_PORT"] != "80") {
+        $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+    } else {
+        $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+    }
+    return $pageURL;
+}
+
 
 define('DS', DIRECTORY_SEPARATOR);
-$url = "http://{$_SERVER['HTTP_HOST']}/";
+$url = curPageURL();
 $path = realpath('');
 setlocale(LC_ALL, 'IND');
 $dateFormat = '%c';
