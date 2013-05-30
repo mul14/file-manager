@@ -29,6 +29,7 @@ foreach ($dirs as $dir) {
     $items[$i] = array(
         'name' => $dir,
         'ext' => pathinfo($dir, PATHINFO_EXTENSION),
+        'mime' => $finfo->file($path.DS.$dir),
         'size' => filesize($path.DS.$dir),
         'created' => strftime($dateFormat, filectime($path.DS.$dir)),
         'modified' => strftime($dateFormat, filemtime($path.DS.$dir)),
@@ -91,6 +92,7 @@ $dirs = array_merge($directories, $files);
             <tr>
                 <th><a href="#">Name</a></th>
                 <th><a href="#">Extension</a></th>
+                <th><a href="#">Mime</a></th>
                 <th><a href="#">Size</a></th>
                 <th><a href="#">Modified</a></th>
                 <th><a href="#">Created</a></th>
@@ -103,6 +105,7 @@ $dirs = array_merge($directories, $files);
                     <a href="<?php echo $url.$dir['name'] ?>"><?php echo $dir['name'] ?></a>
                 </td>
                 <td><?php echo $dir['ext'] ?></td>
+                <td><?php echo $dir['mime'] ?></td>
                 <td class="align-right"><?php echo $dir['size'] ?></td>
                 <td><?php echo $dir['modified'] ?></td>
                 <td><?php echo $dir['created'] ?></td>
