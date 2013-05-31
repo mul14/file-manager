@@ -47,7 +47,7 @@ setlocale(LC_ALL, 'IND');
 $dateFormat = '%c';
 $finfo = new finfo(FILEINFO_MIME_TYPE);
 $hideThisFile = array(
-    '.', '..', 'Thumbs.db', 'desktop.ini', '.htaccess',
+    '.', '..', 'Thumbs.db', 'desktop.ini', '.htaccess', '.git'
 );
 $hideThisPattern = array('/~$/');
 
@@ -64,7 +64,7 @@ foreach ($dirs as $dir) {
     if (in_array($dir, $hideThisFile)) continue;
 
     foreach($hideThisPattern as $pattern) {
-        if (preg_match_all($pattern, $dir)) continue;
+        if (preg_match_all($pattern, $dir, $matches)) continue;
     }
 
     $items[$i] = array(
