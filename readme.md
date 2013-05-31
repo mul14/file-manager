@@ -23,12 +23,6 @@ extension=php_fileinfo.dll
 
 Restart web server.
 
-Untuk pengguna Debian/Ubuntu
-
-```
-sudo phpenmod fileinfo
-```
-
 #### *nix
 
 Pengguna *nix, file `php.ini` biasanya ada di `/etc`. Lokasi file untuk mengaktifkan php extension mungkin berbeda-beda pada tiap distro.
