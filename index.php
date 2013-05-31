@@ -28,13 +28,11 @@ function formatSizeUnits($bytes) {
 }
 
 function curPageURL() {
-    $pageURL = 'http';
-    if (!empty($_SERVER["HTTPS"])) {$pageURL .= "s";}
-    $pageURL .= "://";
-    if ($_SERVER["SERVER_PORT"] != "80") {
-        $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-    } else {
-        $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+    $pageURL = '?';
+    if (isset($_SERVER['HTTP_HOST'])) {
+        $pageURL = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' ? 'https' : 'http';
+        $pageURL .= '://' . $_SERVER['HTTP_HOST'];
+        $pageURL .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
     }
     return $pageURL;
 }
